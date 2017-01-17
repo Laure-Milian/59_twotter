@@ -2,29 +2,37 @@
 
 use App\Twoot;
 
+
 Route::get('/', function () {
     // Récupérer tous les "twoots" et les ajouter à la vue
     return view('app')->with([
-        'twoots' => [] //Twoot::___()
+        'twoots' => Twoot::all()
     ]);
 });
 
 //Ici, décommenter et créer la route '/about'
-//Route::get('______', function(){
-//    return ____; //Renvoyer la vue 'about' !
-//});
+Route::get('about', function(){
+    return view('about'); //Renvoyer la vue 'about' !
+});
+
+Route::get('twoots/{id}', function($id) {
+	return view('twoot')->with([
+		'twoot' => Twoot::find($id)
+	]);
+});
+
 
 Route::post('twoots', function(){
-//    Twoot::______([
-//        'text' => request()->____
-//    ]);
-//
-//    return redirect()->to('_');
+    Twoot::create([
+        'text' => request()->text . ' bla bla'
+    ]);
+
+    return redirect()->to('/');
 });
 
 Route::delete('twoots/{id}', function($id){
 //    Trouver le twoot, puis le supprimer
-//    Twoot::____($id)->______();
+    Twoot::find($id)->delete();
 
     return redirect()->to('/');
 });
